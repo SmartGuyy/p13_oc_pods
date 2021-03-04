@@ -6,7 +6,7 @@ This repository include 2 Dockerfile that we build on a remote k8s masternode an
 
 # Before running pipeline
 
-If you are using a private key for SSH connection, please reach Gitlab CI/CD settings of this repository and click on "add a variable", name it "SSH_KEY" then input the private key as "value", make it protected/masked and you're good to go.
+If you are using a private key for SSH connection, please reach Gitlab CI/CD settings of this repository and click on "add a variable", name it "SSH_KEY" then input the private key as "value", make it protected and you're good to go.
 
 If you are not using a private key for SSH connection : remove the parts where we create private key from gitlab variable + give permissions, also remove "-i ansible.key" with "ssh" command and you should be good to go.
 
