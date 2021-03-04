@@ -1,0 +1,50 @@
+---
+- hosts: "masters"
+  remote_user: ubuntu
+  become: yes
+  become_method: sudo
+  become_user: root
+  gather_facts: yes
+  connection: ssh
+  tasks:
+   
+   - name: Download repository
+     get_url:
+     url: https://github.com/SmartGuyy/p13-oc-pods/archive/master.zip
+     dest: /home/ubuntu
+     mode: '0440
+
+   - name: Unzip repository
+     become_user: ubuntu
+     become_method: sudo
+     become: yes
+     command: "{{ item }}"
+     with_items: 
+        - unzip /home/ubuntu/master.zip
+        - rm master.zip
+
+   - name: Creating docker local registry, building images and pushing it
+     become_user: ubuntu
+     become_method: sudo
+     become: yes
+     command: "{{ item }}"
+     with_items: 
+        - docker run -d -p 5000:5000 --restart=always --name registry registry:2
+        - docker build localhost:5000/mysql-server -f /home/ubuntu/p13-oc-pods/Alpine_MySQL-server/Dockerfile /home/Ubuntu/p13-oc-pods/Alpine_MySQL-server 
+        - docker push localhost:5000/mysql-server
+        - docker build localhost:5000/php_mysql-client .
+        - docker push localhost:5000/php_mysql-client
+
+   - name: Applying pod configuration to create them
+     become_user: ubuntu
+     become_method: sudo
+     become: yes
+     command: "{{ item }}"
+     with_items: 
+        - kubectl apply -f /home/ubuntu/p13-oc-pods/Alpine_MySQL-server/POD_MySQL-server.yaml
+        - kubectl apply -f /home/ubuntu/p13-oc-pods/Alpine_PHP_MySQL-client/POD_PHP-MySQL.yaml
+   
+   - pause: seconds=30
+
+
+...

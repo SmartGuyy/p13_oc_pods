@@ -1,0 +1,9 @@
+# Please update this section if you need to add/modify/remove any host in master/worker section
+
+[masters]
+master ansible_host=ec2-18-221-226-68.us-east-2.compute.amazonaws.com ansible_user=ubuntu
+
+# [workers]
+# 10.0.1.232
+# worker1 ansible_host=k8nod1.linuxsysadmins.local ansible_user=ansible
+# worker2 ansible_host=k8nod2.linuxsysadmins.local ansible_user=ansible

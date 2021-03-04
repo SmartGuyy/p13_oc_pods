@@ -1,0 +1,39 @@
+stages:
+- verify
+- predeploy
+- deploy
+
+ansible-verify:
+  stage: verify
+  tags:
+  - gitlabserver
+  script:
+  - ansible-playbook --inventory hosts --syntax-check build_deploy_pods.yml
+
+# make sure all production hosts are online and can be manged by ansible if not stop pipeline
+predeploy:
+  stage: predeploy
+  tags:
+    - gitlabserver
+  script:
+  - mkdir secret # create secret dir
+  - echo "$ANSIBLE_SSHKEY" > secret/ansible.key # create priv key from gitlab variable
+  - chmod 400 secret/ansible.key
+  - export ANSIBLE_HOST_KEY_CHECKING=False # disable host key checking for ansible
+  - ansible --private-key secret/ansible.key --inventory hosts all -m ping
+  only:
+  - master
+
+# deploy playbooks to production
+deploy:
+  stage: deploy
+  tags:
+  - gitlabserver
+  script:
+  - mkdir secret # create secret dir
+  - echo "$ANSIBLE_SSHKEY" > secret/ansible.key # create priv key from gitlab variable
+  - chmod 400 secret/ansible.key
+  - export ANSIBLE_HOST_KEY_CHECKING=False # disable host key checking for ansible
+  - ansible-playbook --private-key secret/ansible.key --inventory hosts build_deploy_pods.yml
+  only:
+  - master
