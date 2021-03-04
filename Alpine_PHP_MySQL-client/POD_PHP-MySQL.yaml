@@ -1,11 +1,11 @@
 apiVersion: v1
 kind: Pod
 metadata:
-  name: php-mysql
+  name: php_mysql-client
 spec:
   containers:
-  - name: php-mysql
-    image: localhost:5000/php-mysql
+  - name: php_mysql-client
+    image: localhost:5000/php_mysql-client
     # Just spin & wait forever
     command: [ "/bin/sh", "-c", "--" ]
     args: [ "while true; do sleep 30; done;" ]
