@@ -7,39 +7,32 @@
   gather_facts: yes
   connection: ssh
   tasks:
-   
    - name: Installing unzip
      apt: 
        name:
          - unzip
        state: present
 
-   - name: Download repository
-     get_url:
-     url: https://github.com/SmartGuyy/p13_oc_pods/archive/master.zip
-     dest: /tmp
-     mode: '0440'
+   - name: Download and unarchive
+     unarchive:
+       src: https://github.com/SmartGuyy/p13_oc_pods/archive/master.zip
+       dest: /tmp
+       remote_src: yes
+  
+   - name: Ensure downloaded directories are 0755
+     command: find /tmp/p13_oc_pods-master -type d -exec chmod 0755 {} \;
 
-   - name: Unzip repository
-     become_user: ubuntu
-     become_method: sudo
-     become: yes
-     command: "{{ item }}"
-     with_items: 
-        - unzip /tmp/master.zip
-        - rm master.zip
-
+   - name: Ensure downloaded files are 0644
+     command: find /tmp/p13_oc_pods-master -type f -exec chmod 0644 {} \;
+   
    - name: Creating docker local registry, building images and pushing it
-     become_user: ubuntu
-     become_method: sudo
-     become: yes
      command: "{{ item }}"
      with_items: 
         - docker run -d -p 5000:5000 --restart=always --name registry registry:2
         - docker build -t localhost:5000/mysql-server -f /tmp/p13_oc_pods-master/Alpine_MySQL-server/Dockerfile /tmp/p13_oc_pods-master/Alpine_MySQL-server
         - docker push localhost:5000/mysql-server
-        - docker build -t localhost:5000/php_mysql-client -f /tmp/p13_oc_pods-master/Alpine_PHP_MySQL-client/Dockerfile /tmp/p13_oc_pods-master/Alpine_PHP_MySQL-client 
-        - docker push localhost:5000/php_mysql-client
+        - docker build -t localhost:5000/php-mysql-client -f /tmp/p13_oc_pods-master/Alpine_PHP_MySQL-client/Dockerfile /tmp/p13_oc_pods-master/Alpine_PHP_MySQL-client 
+        - docker push localhost:5000/php-mysql-client
 
    - name: Applying pod configuration to create them
      become_user: ubuntu
