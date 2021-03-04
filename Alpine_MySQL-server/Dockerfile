@@ -16,11 +16,15 @@ RUN apk add --no-cache mysql
 RUN addgroup mysql mysql
 
 # Work path
-WORKDIR /scripts
+WORKDIR /tmp/p13_oc_pods-master/Alpine_MySQL-server/scripts
+
+# Copy of the MySQL startup script
+COPY /tmp/p13_oc_pods-master/Alpine_MySQL-server/scripts/start.sh start.sh
 
 # Creating the persistent volume
 VOLUME [ "/var/lib/mysql" ]
 
 EXPOSE 3306
 
-ENTRYPOINT [ "./tmp/p13_oc_pods-master/Alpine_MySQL-server/scripts/start.sh" ]
+ENTRYPOINT [ "./start.sh" ]
+
