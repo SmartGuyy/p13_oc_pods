@@ -23,4 +23,4 @@ VOLUME [ "/var/lib/mysql" ]
 
 EXPOSE 3306
 
-ENTRYPOINT [ "https://github.com/SmartGuyy/p13_oc_pods/blob/master/Alpine_MySQL-server/scripts/start.sh" ]
+ENTRYPOINT [ "./tmp/p13_oc_pods-master/Alpine_MySQL-server/scripts/start.sh" ]
