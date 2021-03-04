@@ -18,8 +18,11 @@ RUN addgroup mysql mysql
 # Work path
 WORKDIR /tmp/p13_oc_pods-master/Alpine_MySQL-server/scripts
 
-# Copy of the MySQL startup script
-COPY /tmp/p13_oc_pods-master/Alpine_MySQL-server/scripts/start.sh start.sh
+# get start.sh entrypoint
+RUN wget https://raw.githubusercontent.com/SmartGuyy/p13_oc_pods/master/Alpine_MySQL-server/scripts/start.sh
+
+# give permission to execute
+RUN chmod +x start.sh
 
 # Creating the persistent volume
 VOLUME [ "/var/lib/mysql" ]
@@ -27,4 +30,3 @@ VOLUME [ "/var/lib/mysql" ]
 EXPOSE 3306
 
 ENTRYPOINT [ "./start.sh" ]
-
