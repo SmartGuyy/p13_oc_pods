@@ -1,10 +1,10 @@
-## Alpine_MySQL-server
+## oraclelinux_MySQL-server
 
 Docker image with MySQL server.
 
-Image size : 171 MB.
+Image size : 406 MB.
 
-This Docker image is based on Alpine Linux version 3.13.2.
+This Docker image is based on oraclelinux slim version 7.
 
 ## Build locally on K8s masternode :
 
@@ -34,12 +34,11 @@ kubectl apply -f POD_MySQL-server.yaml
 ## Credentials
 
 **Default :**  
-* `MYSQL_ROOT_PASSWORD` : `root`,
-* `MYSQL_DATABASE` : `app`,
-* `MYSQL_USER` : `app`,
-* `MYSQL_PASSWORD` : `app`,
-* `MYSQL_USER_MONITORING` : `monitoring`,
-* `MYSQL_PASSWORD_MONITORING` : `monitoring`
-
-**Custom :** In the `.env` file, change the different values to suit your needs.
-
+* `MYSQL_ROOT_PASSWORD` : see kubectl logs mysql-server to find generated password, then change it manually :
+```
+kubectl exec -it mysql-server /bin/sh
+```
+Then connect to database and : 
+```
+ALTER USER 'root'@'localhost' IDENTIFIED BY 'password';
+```

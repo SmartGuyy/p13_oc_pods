@@ -33,16 +33,21 @@
        owner: ubuntu
        group: ubuntu
        
-   - name: Changing perm of "start.sh", adding "+x"
+   - name: Changing permission of "docker-entrypoint.sh", adding "+x"
      file: 
-       dest: /tmp/p13_oc_pods-master/Alpine_MySQL-server/scripts/start.sh
+       dest: /tmp/p13_oc_pods-master/oraclelinux_MySQL-server/docker-entrypoint.sh
+       mode: a+x
+
+   - name: Changing permission of "healthcheck", adding "+x"
+     file: 
+       dest: /tmp/p13_oc_pods-master/oraclelinux_MySQL-server/healthcheck.sh
        mode: a+x
 
    - name: Creating docker local registry, building images and pushing it
      command: "{{ item }}"
      with_items: 
         - docker run -d -p 5000:5000 --restart=always --name registry registry:2
-        - docker build -t localhost:5000/mysql-server -f /tmp/p13_oc_pods-master/Alpine_MySQL-server/Dockerfile /tmp/p13_oc_pods-master/Alpine_MySQL-server
+        - docker build -t localhost:5000/mysql-server -f /tmp/p13_oc_pods-master/oraclelinux_MySQL-server/Dockerfile /tmp/p13_oc_pods-master/oraclelinux_MySQL-server
         - docker push localhost:5000/mysql-server
         - docker build -t localhost:5000/php-mysql-client -f /tmp/p13_oc_pods-master/Alpine_php_MySQL-client/Dockerfile /tmp/p13_oc_pods-master/Alpine_php_MySQL-client 
         - docker push localhost:5000/php-mysql-client
@@ -53,7 +58,7 @@
      become: yes
      command: "{{ item }}"
      with_items: 
-        - kubectl apply -f /tmp/p13_oc_pods-master/Alpine_MySQL-server/POD_MySQL-server.yaml
+        - kubectl run mysql-server --image=localhost:5000/mysql-server --image-pull-policy=Never
         - kubectl apply -f /tmp/p13_oc_pods-master/Alpine_php_MySQL-client/POD_php-MySQL.yaml
    
    - pause: seconds=30
