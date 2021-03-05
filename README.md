@@ -1,7 +1,7 @@
 # Build dockerfiles and deploy K8s pods
 
 This repository include 2 Dockerfile that we build on a remote k8s masternode and create pods :
-- first one is Alpine image with a MySQL server installed
+- first one is oraclelinux image with a MySQL server installed
 - second one is Alpine image with php, php-mysqli and mysql-client packages installed
 
 # Before running pipeline
