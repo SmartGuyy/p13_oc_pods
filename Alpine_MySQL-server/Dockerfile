@@ -18,11 +18,11 @@ RUN addgroup mysql mysql
 # Work path
 WORKDIR /tmp/p13_oc_pods-master/Alpine_MySQL-server/scripts
 
+# Set execution permission
+RUN chmod +x scripts/start.sh
+
 # Copy of the MySQL startup script
 COPY scripts/start.sh start.sh
-
-# Set execution permission
-RUN chmod +x start.sh
 
 # Creating the persistent volume
 VOLUME [ "/var/lib/mysql" ]
