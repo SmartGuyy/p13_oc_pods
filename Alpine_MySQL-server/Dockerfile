@@ -1,4 +1,4 @@
-FROM alpine:3.13.2
+FROM alpine:3.7
 
 LABEL APP="mariadb"
 LABEL APP_REPOSITORY="https://pkgs.alpinelinux.org/package/edge/main/aarch64/mysql"
