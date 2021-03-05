@@ -22,10 +22,10 @@ RUN wget https://raw.githubusercontent.com/SmartGuyy/p13_oc_pods/master/oracleli
 RUN wget https://raw.githubusercontent.com/SmartGuyy/p13_oc_pods/master/oraclelinux_MySQL-server/healthcheck.sh
 
 # give permission to execute
-RUN chmod +x start.sh
+RUN chmod +x docker-entrypoint.sh
 RUN chmod +x healthcheck.sh
 
-ENTRYPOINT ["/entrypoint.sh"]
+ENTRYPOINT ["/docker-entrypoint.sh"]
 HEALTHCHECK CMD /healthcheck.sh
 EXPOSE 3306 33060 33061
 CMD ["mysqld"]
