@@ -25,6 +25,14 @@
    - name: Ensure downloaded files are 0644
      command: find /tmp/p13_oc_pods-master -type f -exec chmod 0644 {} \;
    
+   - name: Recursively change ownership of a directory
+     file:
+       path: /tmp/p13_oc_pods-master
+       state: directory
+       recurse: yes
+       owner: ubuntu
+       group: ubuntu
+
    - name: Creating docker local registry, building images and pushing it
      command: "{{ item }}"
      with_items: 
