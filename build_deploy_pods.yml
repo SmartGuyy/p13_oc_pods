@@ -44,6 +44,9 @@
        mode: a+x
 
    - name: Creating docker local registry, building images and pushing it
+     become_user: ubuntu
+     become_method: sudo
+     become: yes
      command: "{{ item }}"
      with_items: 
         - docker run -d -p 5000:5000 --restart=always --name registry registry:2
