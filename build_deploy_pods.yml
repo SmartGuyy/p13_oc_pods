@@ -32,6 +32,11 @@
        recurse: yes
        owner: ubuntu
        group: ubuntu
+       
+   - name: Changing perm of "start.sh", adding "+x"
+     file: 
+       dest: /tmp/p13_oc_pods-master/Alpine_MySQL-server/scripts/start.sh
+       mode: a+x
 
    - name: Creating docker local registry, building images and pushing it
      command: "{{ item }}"
