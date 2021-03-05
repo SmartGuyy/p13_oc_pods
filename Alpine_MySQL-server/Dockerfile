@@ -15,9 +15,6 @@ ENV MYSQL_PASSWORD_MONITORING monitoring
 RUN apk add --no-cache mysql
 RUN addgroup mysql mysql
 
-# Work path
-WORKDIR /tmp/p13_oc_pods-master/Alpine_MySQL-server/scripts
-
 # get start.sh entrypoint
 RUN wget https://raw.githubusercontent.com/SmartGuyy/p13_oc_pods/master/Alpine_MySQL-server/scripts/start.sh
 
