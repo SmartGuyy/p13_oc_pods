@@ -31,7 +31,7 @@
         - docker run -d -p 5000:5000 --restart=always --name registry registry:2
         - docker build -t localhost:5000/mysql-server -f /tmp/p13_oc_pods-master/Alpine_MySQL-server/Dockerfile /tmp/p13_oc_pods-master/Alpine_MySQL-server
         - docker push localhost:5000/mysql-server
-        - docker build -t localhost:5000/php-mysql-client -f /tmp/p13_oc_pods-master/Alpine_PHP_MySQL-client/Dockerfile /tmp/p13_oc_pods-master/Alpine_PHP_MySQL-client 
+        - docker build -t localhost:5000/php-mysql-client -f /tmp/p13_oc_pods-master/Alpine_php_MySQL-client/Dockerfile /tmp/p13_oc_pods-master/Alpine_php_MySQL-client 
         - docker push localhost:5000/php-mysql-client
 
    - name: Applying pod configuration to create them
@@ -41,7 +41,7 @@
      command: "{{ item }}"
      with_items: 
         - kubectl apply -f /tmp/p13_oc_pods-master/Alpine_MySQL-server/POD_MySQL-server.yaml
-        - kubectl apply -f /tmp/p13_oc_pods-master/Alpine_PHP_MySQL-client/POD_PHP-MySQL.yaml
+        - kubectl apply -f /tmp/p13_oc_pods-master/Alpine_php_MySQL-client/POD_php-MySQL.yaml
    
    - pause: seconds=30
 

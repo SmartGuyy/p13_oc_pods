@@ -1,10 +1,10 @@
 ## Alpine_MySQL-server
-Image size : 171 MB
 
-## Versions
+Docker image with MySQL server.
 
-Alpine : `3.7`   
-MySQL : `mariaDB-10.1.28-r1`
+Image size : 171 MB.
+
+This Docker image is based on Alpine Linux version 3.13.2.
 
 ## Build locally on K8s masternode :
 
@@ -12,17 +12,23 @@ Use a local registry:
 ```
 docker run -d -p 5000:5000 --restart=always --name registry registry:2
 ```
-Now build and tag your image accordingly
+Build and tag your image accordingly
 
 ```
 docker build localhost:5000/mysql-server .
 ```
 Note that localhost should be changed to dns name of the machine running registry container.
 
-Now push your image to local registry:
+Push your image to local registry:
 
 ```
 docker push localhost:5000/mysql-server
+```
+
+Apply pod yaml :
+
+```
+kubectl apply -f POD_MySQL-server.yaml
 ```
 
 ## Credentials
