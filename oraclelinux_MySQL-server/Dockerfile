@@ -28,6 +28,9 @@ RUN yum install -y https://repo.mysql.com/mysql-community-minimal-release-el7.rp
   && yum clean all \
   && mkdir /docker-entrypoint-initdb.d
 
+# Install wget
+RUN yum install -y wget
+
 VOLUME /var/lib/mysql
 # Copyright (c) 2017, Oracle and/or its affiliates. All rights reserved.
 #
