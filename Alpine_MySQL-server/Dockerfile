@@ -12,7 +12,7 @@ ENV MYSQL_USER_MONITORING monitoring
 ENV MYSQL_PASSWORD_MONITORING monitoring
 
 # Installing packages MariaDB
-RUN apk add --no-cache mysql mysql-client
+RUN apk add --no-cache mysql
 RUN addgroup mysql mysql
 
 # Work path
