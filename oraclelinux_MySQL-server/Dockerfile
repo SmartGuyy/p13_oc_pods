@@ -61,8 +61,13 @@ RUN yum install -y https://repo.mysql.com/mysql-community-minimal-release-el7.rp
 
 VOLUME /var/lib/mysql
 
-COPY /tmp/p13_oc_pods-master/oraclelinux_MySQL-server/docker-entrypoint.sh /entrypoint.sh
-COPY /tmp/p13_oc_pods-master/oraclelinux_MySQL-server/healthcheck.sh /healthcheck.sh
+# download entrypoint and healthcheck
+RUN wget https://raw.githubusercontent.com/SmartGuyy/p13_oc_pods/master/oraclelinux_MySQL-server/docker-entrypoint.sh
+RUN wget https://raw.githubusercontent.com/SmartGuyy/p13_oc_pods/master/oraclelinux_MySQL-server/healthcheck.sh
+
+# give permission to execute
+RUN chmod +x start.sh
+RUN chmod +x healthcheck.sh
 
 ENTRYPOINT ["/entrypoint.sh"]
 HEALTHCHECK CMD /healthcheck.sh
