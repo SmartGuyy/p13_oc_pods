@@ -19,7 +19,7 @@ RUN addgroup mysql mysql
 WORKDIR /tmp/p13_oc_pods-master/Alpine_MySQL-server/scripts
 
 # Copy of the MySQL startup script
-COPY /tmp/p13_oc_pods-master/Alpine_MySQL-server/scripts/start.sh start.sh
+COPY scripts/start.sh start.sh
 
 # Creating the persistent volume
 VOLUME [ "/var/lib/mysql" ]
@@ -27,3 +27,4 @@ VOLUME [ "/var/lib/mysql" ]
 EXPOSE 3306
 
 ENTRYPOINT [ "./start.sh" ]
+
